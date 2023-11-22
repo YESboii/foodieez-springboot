@@ -7,10 +7,13 @@ import com.ayush.foodiez.repository.ProductRepository;
 import com.ayush.foodiez.repository.VendorRepository;
 import com.ayush.foodiez.service.CategoryService;
 import com.ayush.foodiez.service.ProductService;
+import com.ayush.foodiez.service.fileservice.FileService;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,19 +24,32 @@ public class ProductServiceImpl implements ProductService {
     private final VendorRepository vendorRepository;
     private final CategoryService categoryService;
 
+    private final FileService fileService;
+
+    private String filePath = "D:\\foodiezImgs";
+
     public ProductServiceImpl(ProductRepository productRepository,VendorRepository vendorRepository
-    ,CategoryService categoryService) {
+    ,CategoryService categoryService, FileService fileService) {
         this.productRepository = productRepository;
         this.vendorRepository = vendorRepository;
         this.categoryService = categoryService;
+        this.fileService = fileService;
     }
 
     @Override
     @Transactional
-    public Product createUpdate(Product product,int categoryId,int vendorId) {
+    public Product createUpdate(Product product, int categoryId, int vendorId, MultipartFile file) {
         Category category = categoryService.findById(categoryId,vendorId).orElseThrow(
                 ()->new RuntimeException("Category doesnt exists")//highly unlikely..
         );
+        String path = "";
+        try{
+            path = fileService.addImage(filePath,file);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        product.setImagePath(path);
         product.setCategory(category);
         return productRepository.save(product);
     }

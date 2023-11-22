@@ -6,12 +6,15 @@ import com.ayush.foodiez.model.Product;
 import com.ayush.foodiez.service.CategoryService;
 import com.ayush.foodiez.service.ProductService;
 import com.ayush.foodiez.service.VendorService;
+import com.ayush.foodiez.service.fileservice.FileService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,7 +26,8 @@ public class VendorController {
 
     private final ProductService productService;
 
-    public VendorController(VendorService vendorService,CategoryService categoryService,ProductService productService) {
+    public VendorController(VendorService vendorService,CategoryService categoryService,
+                            ProductService productService) {
        this.vendorService = vendorService;
        this.categoryService = categoryService;
        this.productService = productService;
@@ -81,9 +85,9 @@ public class VendorController {
     }
     @RequestMapping(path="/{vendorId}/products",method = RequestMethod.POST)
     public String addProduct(@PathVariable("vendorId")int vendorId, @ModelAttribute Product product,
-                             @RequestParam("categoryId")int categoryId, Model model){
+                             @RequestParam("categoryId")int categoryId, Model model, @RequestParam("pathImage")MultipartFile file){
         if(vendorService.existsById(vendorId)){
-            productService.createUpdate(product,categoryId,vendorId);
+            productService.createUpdate(product,categoryId,vendorId,file);
             return String.format("redirect:/foodieez/%d/products",vendorId);
         }
         return "error";
