@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> findById(int id, int vendorId,int categoryId) {
+    public Optional<Product> findById(int id,int categoryId,int vendorId) {
         Optional<Category> category = categoryService.findById(categoryId,vendorId);
         if (category.isEmpty()) return Optional.empty();
         return productRepository.findByIdAndCategory(id,category.get());

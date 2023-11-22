@@ -57,15 +57,15 @@
         <tr th:each="product : ${products}">
             <td th:text="${product.name}" />
             <td>
-                <form th:action="@{'/foodieez/'+${idVendor}+'/categories/'+${product.id}}" method="post">
+                <form th:action="@{'/foodieez/'+${idVendor}+'/'+${product.category.id}+'/'+${product.id}}" method="post">
                     <input type="hidden" name="_method" value="delete" />
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </td>
             <td>
-                <form th:action="@{'/foodieez/'+${idVendor}+'/categories/'+${product.id}}" method="post">
-                    <input type="hidden" name="_method" value="put" />
-                    <button type="submit" class="btn btn-danger">Update</button>
+                <form th:action="@{'/foodieez/'+${idVendor}+'/'+${product.category.id}+'/'+${product.id}}" method="get">
+<!--                    <input type="hidden" name="_method" value="put" />-->
+                    <button type="submit" class="btn btn-danger" id="update">Update</button>
                 </form>
             </td>
         </tr>
@@ -98,6 +98,11 @@
         pn.value = pageNumber + 1;
         event.target.closest('form').submit();
     });
+    document.querySelector("#update").addEventListener('click',displayDetails);
+
+    function displayDetails(){
+
+    }
 </script>
 
 </body>

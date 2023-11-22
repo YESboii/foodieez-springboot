@@ -35,8 +35,8 @@
 
 </head>
 <body>
-<div class="form-div">
-  <form th:action="@{'/foodieez/'+${idVendor}+'/products'}" th:object="${categories}" method="post" enctype="multipart/form-data">
+<div class="form-div" th:object="${categories}">
+  <form th:action="@{'/foodieez/'+${idVendor}+'/products'}"  method="post" enctype="multipart/form-data">
     <div>
       <h2>Add new Product</h2>
     </div>
@@ -61,7 +61,7 @@
       </select>
     </div>
     <div class="mb-3">
-      <label for="imagePath" class="form-label">Image</label>
+      <label for="pathImage" class="form-label">Image</label>
       <input class="form-control" type="file" id="pathImage" name="pathImage" >
     </div>
 

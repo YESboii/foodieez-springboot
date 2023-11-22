@@ -110,5 +110,18 @@ public class VendorController {
         model.addAttribute("products",products);
         return "products";
     }
+    @RequestMapping(path = "/{vendorId}/{categoryId}/{productId}",method = RequestMethod.GET)
+    public String renderUpdateProductPage(@PathVariable("categoryId")int categoryId,
+                                          @PathVariable("productId")int productId, Model model, @PathVariable int vendorId){
+        System.out.println(productId+" "+categoryId+" "+vendorId);
+        Product productToBeUpdated = productService.findById(productId,categoryId,vendorId).orElseThrow(()->new RuntimeException("kdsks"));
+        List<Category> categories = categoryService.findAll(vendorId);
+        model.addAttribute("productToBeUpdated",productToBeUpdated);
+        model.addAttribute("categories",categories);
+        model.addAttribute("idVendor",vendorId);
+        System.out.println(productToBeUpdated.getImagePath());
+        model.addAttribute("imagepath",productToBeUpdated.getImagePath());
+        return "updateProduct";
+    }
 
 }
