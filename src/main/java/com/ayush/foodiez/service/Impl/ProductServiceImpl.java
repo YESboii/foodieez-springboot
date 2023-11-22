@@ -26,7 +26,6 @@ public class ProductServiceImpl implements ProductService {
 
     private final FileService fileService;
 
-    private String filePath = "D:\\foodiezImgs";
 
     public ProductServiceImpl(ProductRepository productRepository,VendorRepository vendorRepository
     ,CategoryService categoryService, FileService fileService) {
@@ -39,6 +38,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public Product createUpdate(Product product, int categoryId, int vendorId, MultipartFile file) {
+         final String filePath = "foodiez/src/main/resources/static/productImages";
         Category category = categoryService.findById(categoryId,vendorId).orElseThrow(
                 ()->new RuntimeException("Category doesnt exists")//highly unlikely..
         );

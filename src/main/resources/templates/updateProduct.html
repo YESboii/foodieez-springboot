@@ -39,7 +39,7 @@
 <body>
 <div class="form-div" th:object="${productToBeUpdated}" >
     <div>
-       <img src="" th:src="@{${imagepath}}" alt="Cannot display image" />
+       <img src="" th:src="@{${'/productImages/' + imagepath}}" alt="Cannot display image" />
     </div>
     <form th:action="@{'/foodieez/'+${idVendor}+'/products'}"  method="post" enctype="multipart/form-data">
         <div>

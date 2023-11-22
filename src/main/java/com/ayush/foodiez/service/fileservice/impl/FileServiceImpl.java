@@ -17,7 +17,8 @@ public class FileServiceImpl implements FileService {
         boolean flag = true;
         // 1) name of file,2)path where the file must be saved, 3)copy the img
         String fileNameToBeUploaded = file.getOriginalFilename();
-        String filePath = path + File.separator + UUID.randomUUID() +fileNameToBeUploaded;
+        String fileName =  fileNameToBeUploaded;
+        String filePath =  path + '/' + fileName;
         System.out.println(filePath);
 
         File file1 = new File(path);
@@ -33,7 +34,7 @@ public class FileServiceImpl implements FileService {
             exception.printStackTrace();
             flag = false;
         }
-        if (flag) return filePath;
+        if (flag) return fileName;
 
         return "";
     }
