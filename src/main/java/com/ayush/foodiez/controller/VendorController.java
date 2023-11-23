@@ -87,7 +87,7 @@ public class VendorController {
     public String addProduct(@PathVariable("vendorId")int vendorId, @ModelAttribute Product product,
                              @RequestParam("categoryId")int categoryId, Model model, @RequestParam("pathImage")MultipartFile file){
         if(vendorService.existsById(vendorId)){
-            productService.createUpdate(product,categoryId,vendorId,file);
+            productService.createUpdate(product,categoryId,vendorId,file,Constants.FILE_SAVE);
             return String.format("redirect:/foodieez/%d/products",vendorId);
         }
         return "error";
@@ -101,11 +101,11 @@ public class VendorController {
         Page<Product> products = productService.findAll(vendorId,pageable);
         System.out.println(pageNumber);
         List<Product> products1 = products.getContent();
-        for (Product product:
-             products1) {
-            System.out.println(product.getId());
-        }
-        System.out.println(products.getTotalElements());
+//        for (Product product:
+//             products1) {
+//            System.out.println(product.getId());
+//        }
+//        System.out.println(products.getTotalElements());
         model.addAttribute("idVendor",vendorId);
         model.addAttribute("products",products);
         return "products";
@@ -113,7 +113,7 @@ public class VendorController {
     @RequestMapping(path = "/{vendorId}/{categoryId}/{productId}",method = RequestMethod.GET)
     public String renderUpdateProductPage(@PathVariable("categoryId")int categoryId,
                                           @PathVariable("productId")int productId, Model model, @PathVariable int vendorId){
-        System.out.println(productId+" "+categoryId+" "+vendorId);
+
         Product productToBeUpdated = productService.findById(productId,categoryId,vendorId).orElseThrow(()->new RuntimeException("kdsks"));
         List<Category> categories = categoryService.findAll(vendorId);
         model.addAttribute("productToBeUpdated",productToBeUpdated);
@@ -122,6 +122,25 @@ public class VendorController {
         System.out.println(productToBeUpdated.getImagePath());
         model.addAttribute("imagepath",productToBeUpdated.getImagePath());
         return "updateProduct";
+    }
+
+    @RequestMapping(path="/{vendorId}/{categoryId}/{productId}/update",method = RequestMethod.PUT)
+    public String updateProduct(@PathVariable("vendorId")int vendorId, @ModelAttribute Product product,
+                                @PathVariable("productId") int productId,
+                             @RequestParam("categoryId")int categoryIdNew, Model model, @RequestParam("pathImage")MultipartFile file,
+    @RequestParam("oldName")String oldName){
+
+        product.setImagePath(oldName);
+        if(vendorService.existsById(vendorId)){
+            productService.createUpdate(product,categoryIdNew,vendorId,file,Constants.FILE_UPDATE);
+            return String.format("redirect:/foodieez/%d/products",vendorId);
+        }
+        return "error";
+    }
+    @RequestMapping(path="/{vendorId}/{categoryId}/{productId}",method = RequestMethod.DELETE)
+    public String deleteProduct(@PathVariable int vendorId,@PathVariable int categoryId,@PathVariable int productId){
+        productService.deleteById(productId,categoryId,vendorId);
+        return String.format("redirect:/foodieez/%d/products",vendorId);
     }
 
 }

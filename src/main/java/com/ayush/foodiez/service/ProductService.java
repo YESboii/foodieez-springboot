@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
-    Product createUpdate(Product product, int categoryId, int vendorId, MultipartFile file);
+    Product createUpdate(Product product, int categoryId, int vendorId, MultipartFile file,int type);
    Optional<Product> findById(int id,int categoryId,int vendorId);
 
    void deleteById(int id,int categoryId,int vendorId);

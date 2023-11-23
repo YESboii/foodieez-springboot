@@ -1,5 +1,6 @@
 package com.ayush.foodiez.service.Impl;
 
+import com.ayush.foodiez.Constants.Constants;
 import com.ayush.foodiez.model.Category;
 import com.ayush.foodiez.model.Product;
 import com.ayush.foodiez.model.Vendor;
@@ -37,17 +38,27 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public Product createUpdate(Product product, int categoryId, int vendorId, MultipartFile file) {
+    public Product createUpdate(Product product, int categoryId, int vendorId, MultipartFile file,int type) {
          final String filePath = "foodiez/src/main/resources/static/productImages";
         Category category = categoryService.findById(categoryId,vendorId).orElseThrow(
                 ()->new RuntimeException("Category doesnt exists")//highly unlikely..
         );
         String path = "";
-        try{
-            path = fileService.addImage(filePath,file);
-        }
-        catch (Exception e){
-            e.printStackTrace();
+        System.out.println(product.getImagePath() + "  service");
+        if (type == Constants.FILE_SAVE) {
+            try {
+                path = fileService.addImage(filePath, file);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else if(type == Constants.FILE_UPDATE){
+            try {
+                System.out.println(product.getImagePath());
+                path = fileService.updateImage(filePath, file,product.getImagePath());
+                System.out.println("this is path " + path);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         product.setImagePath(path);
         product.setCategory(category);
@@ -60,14 +71,17 @@ public class ProductServiceImpl implements ProductService {
         if (category.isEmpty()) return Optional.empty();
         return productRepository.findByIdAndCategory(id,category.get());
     }
-
     @Override
+    @Transactional
     public void deleteById(int id,int categoryId,int vendorId) {
-
+        final String filePath = "foodiez/src/main/resources/static/productImages";
         Optional<Category> category = categoryService.findById(categoryId,vendorId);
 
         if (category.isEmpty()) throw new RuntimeException();
+        Product product = productRepository.findByIdAndCategory(id,category.get()).orElse(null);
+        if(product==null) return;
 
+        fileService.deleteImage(filePath,product.getImagePath());
         productRepository.deleteByIdAndCategory(id,category.get());
     }
 

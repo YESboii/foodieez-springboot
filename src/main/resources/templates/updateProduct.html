@@ -39,9 +39,12 @@
 <body>
 <div class="form-div" th:object="${productToBeUpdated}" >
     <div>
-       <img src="" th:src="@{${'/productImages/' + imagepath}}" alt="Cannot display image" />
+       <img src="" th:src="@{${'/productImages/' + imagepath}}" alt="Cannot display image" width="250px" height="400px"/>
     </div>
-    <form th:action="@{'/foodieez/'+${idVendor}+'/products'}"  method="post" enctype="multipart/form-data">
+    <form th:action="@{'/foodieez/'+${idVendor}+'/'+${productToBeUpdated.category.id}+'/'+${productToBeUpdated.id}+'/update'}"  method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_method" value="put">
+        <input type="hidden" id="id" name="id" th:value="*{id}">
+        <input type="hidden" id="oldName" name="oldName" th:value="${imagepath}">
         <div>
             <h2>Update Product</h2>
         </div>
@@ -61,6 +64,7 @@
             <span class="input-group-text">$</span>
         </div>
         <div class="col-sm-3">
+            <span th:text="${'Current'+ productToBeUpdated.category.name}"></span>
             <label class="visually-hidden" for="categoryId">Preference</label>
             <select class="form-select" id="categoryId" name="categoryId"  required >
                 <option th:each="category : ${categories}"
