@@ -16,6 +16,6 @@ public class config implements WebMvcConfigurer {
     //the view
 //    @Override
 //    public void addViewControllers(ViewControllerRegistry registry) {
-//        WebMvcConfigurer.super.addViewControllers(registry);
+//        registry.addViewController("/signup").setViewName("signup");
 //    }
 }
