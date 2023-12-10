@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        nav {
+            background-color: #007bff;
+            padding: 10px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        nav span {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        li {
+            margin-right: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #b8a7a7; /* Lighter shade for hover effect */
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            background-color: #e9ecef;
+            font-family: 'Arial', sans-serif;
+        }
+
+
+        .main_box {
+            background-color: #fff;
+            width: 80%;
+            height: 100%;
+            margin: 40px auto;
+            border-radius: 40px;
+            padding: 20px;
+        }
+
+        .heading_c {
+            padding-top: 10px;
+            text-align: center;
+        }
+
+        .des_c {
+            padding: 15px;
+        }
+
+        .foodieez_features {
+            padding: 15px;
+            width: 40%;
+            height: 80%;
+            overflow-y: auto;
+            background-color: #007bff;
+            display: inline-block;
+            margin: 12px;
+            border-radius: 20px;
+            transition: outline 0.3s;
+        }
+
+        .foodieez_features:hover {
+            outline: 4px solid rgb(112, 106, 106);
+            outline-offset: 5px;
+        }
+
+        #features_main {
+            margin-left: 75px;
+            margin-top: 20px;
+            display: flex;
+            width: 90%;
+            height: 55%;
+            align-items: center;
+            flex-direction: row;
+        }
+
+        .btn_div {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+        }
+        .btn{
+            background-color: #007bff;
+            width:120px;
+            height:38px;
+            border-radius: 20px;
+            border: none;
+            margin-top:10px;
+            display: block;
+            outline: 3px solid #fff;
+            outline-offset: -5px;
+            transition: 0.4s;
+        }
+        .btn:hover{
+            cursor:pointer;
+            outline: 3px solid black;
+            outline-offset: 4px;
+        }
+        img{
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+        footer{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            background-color: #fff;
+        }
+        #sm-contact-div{
+            margin-top: 4px;
+        }
+        #copyright{
+            margin-top: 20px;
+            margin-right: 20px;
+        }
+
+        /*
+                p, label, a, h1 {
+                    color: white;
+                } */
+    </style>
+</head>
+<body>
+<nav>
+    <span><a th:href="@{'/foodieez/home'}">Foodieez</a></span>
+    <ul>
+        <li><a th:href="@{'/foodieez/home'}">Home</a></li>
+        <li><a th:href="@{'/foodieez/signup'}">Sign Up</a></li>
+        <li><a th:href="@{'/foodieez/login'}">Login</a></li>
+    </ul>
+</nav>
+<div class="main_box">
+    <div class="heading_c"><h1>Foodieez</h1></div>
+    <div class="des_c">
+        <p>Welcome to Foodieez - Your Ultimate Campus Dining Solution!
+
+            Are you tired of waiting in long queues at your college's food outlets, craving your favorite meals but struggling to find the time to enjoy them? Foodieez is here to revolutionize your dining experience right within your college campus.
+
+            Our platform brings all the campus food outlets together under one virtual roof, making it easier than ever to savor your preferred dishes. No more rushing between classes or wasting precious minutes in line. With Foodieez, you can pre-order your meals, customize your orders, and have them delivered to your location on campus.</p>
+    </div>
+    <div id="features_main">
+        <div class="foodieez_features"><p>At Foodieez, we understand that every palate is unique. That's why we bring together a diverse selection of culinary delights from all over your campus. From mouthwatering burgers to delectable vegetarian options, our platform offers something for everyone. Choose us for an unparalleled variety of dining choices, ensuring that you'll never run out of delicious options to explore.</p>
+
+        </div>
+        <div class="foodieez_features"><p>Don't let long lines and limited time slots dictate your dining schedule. With Foodieez, you can pre-order your meals with ease. Our intuitive platform allows you to plan your dining experience in advance, so your food is ready when you want it. Whether it's a quick snack or a hearty meal, choose us for the convenience of pre-ordering and enjoy more time for what matters most—your college life.</p></div>
+        <div class="foodieez_features"><p>Eating out shouldn't break the bank. Foodieez offers cost-effective dining solutions tailored to the student budget. Skip the high delivery fees and markups from mainstream food delivery apps. By choosing us, you'll enjoy your favorite meals at affordable prices, ensuring that quality food doesn't have to come with a hefty price tag. Join Foodieez and savor your meals.</p></div>
+    </div>
+    <div class="btn_div">
+        <a th:href="@{'/foodieez/signup'}"><button id="btn" class="btn" >Sign Up </button></a>
+    </div>
+</div>
+<footer>
+    <div id="copyright">
+        &copy; Foodieez 2023
+    </div>
+    <div id="sm-contact-div">
+        <a href="https://www.linkedin.com/in/ayush-gupta-bb5441250/"><img th:src="@{${'/productImages/x.png'}}" alt=""></a>
+        <a href="https://twitter.com/Ayush6_9"><img th:src="@{${'/productImages/in.png'}}" alt=""></a>
+    </div>
+</footer>
+</body>
+</html>

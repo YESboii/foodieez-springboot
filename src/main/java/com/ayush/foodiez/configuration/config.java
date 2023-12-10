@@ -14,8 +14,9 @@ public class config implements WebMvcConfigurer {
     }
         //This can be used to map simple views with url where no business logic is required in cases such as just returning
     //the view
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/signup").setViewName("signup");
-//    }
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/foodieez/home").setViewName("home");
+        registry.addViewController("/foodieez/login").setViewName("login");
+    }
 }

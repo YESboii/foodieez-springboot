@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
+@RequestMapping("/foodieez/")
 public class SignUpController {
 
     @RequestMapping("/signup")

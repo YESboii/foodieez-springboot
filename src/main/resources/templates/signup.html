@@ -6,6 +6,43 @@
     <!-- Add your CSS link here -->
 </head>
 <style>
+    nav {
+        background-color: #007bff;
+        padding: 10px;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    nav span {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    li {
+        margin-right: 20px;
+    }
+
+    a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: bold;
+        font-size: 1.2em;
+        transition: color 0.3s;
+    }
+
+    a:hover {
+        color: #b8a7a7; /* Lighter shade for hover effect */
+    }
     body, html {
         height: 100%;
         margin: 0;
@@ -14,9 +51,10 @@
     }
 
     .container {
+
         width: 100%;
         max-width: 600px;
-        margin: 0 auto;
+        margin: 5px auto;
         padding: 2rem;
         background-color: #fff;
         border-radius: 0.5rem;
@@ -86,10 +124,8 @@
     }
 
     span {
-        display: block;
-        margin-top: 0.5rem;
-        color: #dc3545;
-        font-size: 0.875rem;
+        position: relative;
+        left: 100px;
     }
     #fg-3{
         display: flex;
@@ -103,10 +139,18 @@
 
 </style>
 <body>
+<nav>
+    <span><a th:href="@{'/foodieez/home'}">Foodieez</a></span>
+    <ul>
+        <li><a th:href="@{'/foodieez/home'}">Home</a></li>
+        <li><a th:href="@{'/foodieez/signup'}">Sign Up</a></li>
+        <li><a th:href="@{'/foodieez/login'}">Login</a></li>
+    </ul>
+</nav>
 
 <div class="container">
     <h2>Sign Up</h2>
-    <form th:action="@{/signup}" method="post" th:object="${userSignUpDto}">
+    <form th:action="@{/foodieez/signup}" method="post" th:object="${userSignUpDto}">
         <div class="form-group">
             <label for="email">Email:</label>
             <input id="email" type="email" name="email" th:field="*{email}" required>
@@ -127,7 +171,7 @@
 
         <div class="form-group">
             <label for="age">Age:</label>
-            <input id="age" type="number" name="age" th:field="*{age}" min="0" required>
+            <input id="age" type="number" name="age" th:field="*{age}"  required>
             <span th:each="error:${#fields.errors('age')}" th:text="${error}"></span>
         </div>
 
