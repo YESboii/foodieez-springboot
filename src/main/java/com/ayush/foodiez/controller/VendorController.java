@@ -3,6 +3,7 @@ package com.ayush.foodiez.controller;
 import com.ayush.foodiez.Constants.Constants;
 import com.ayush.foodiez.model.Category;
 import com.ayush.foodiez.model.Product;
+import com.ayush.foodiez.model.Vendor;
 import com.ayush.foodiez.service.CategoryService;
 import com.ayush.foodiez.service.ProductService;
 import com.ayush.foodiez.service.VendorService;
@@ -39,6 +40,8 @@ public class VendorController {
             List<Category> categories = categoryService.findAll(vendorId);
             model.addAttribute("categories",categories);
             model.addAttribute("idVendor",vendorId);
+            Vendor vendor = vendorService.findById(vendorId).get();
+            model.addAttribute("vendor",vendor);
             return "createCategory";
         }
         return "error";
@@ -79,6 +82,8 @@ public class VendorController {
             List<Category> categories = categoryService.findAll(vendorId);
             model.addAttribute("categories",categories);
             model.addAttribute("idVendor",vendorId);
+            Vendor vendor = vendorService.findById(vendorId).get();
+            model.addAttribute("vendor",vendor);
             return "createProduct";
         }
         return "error";
@@ -108,6 +113,8 @@ public class VendorController {
 //        System.out.println(products.getTotalElements());
         model.addAttribute("idVendor",vendorId);
         model.addAttribute("products",products);
+        Vendor vendor = vendorService.findById(vendorId).get();
+        model.addAttribute("vendor",vendor);
         return "products";
     }
     @RequestMapping(path = "/{vendorId}/{categoryId}/{productId}",method = RequestMethod.GET)
@@ -120,6 +127,8 @@ public class VendorController {
         model.addAttribute("categories",categories);
         model.addAttribute("idVendor",vendorId);
         System.out.println(productToBeUpdated.getImagePath());
+        Vendor vendor = vendorService.findById(vendorId).get();
+        model.addAttribute("vendor",vendor);
         model.addAttribute("imagepath",productToBeUpdated.getImagePath());
         return "updateProduct";
     }

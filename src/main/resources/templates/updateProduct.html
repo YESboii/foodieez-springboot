@@ -7,6 +7,11 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
+        .main{
+            display: flex;
+            justify-content: center;
+            margin-top: 1vh;
+        }
         body, html {
             margin: 0;
             width: 100%;
@@ -15,17 +20,18 @@
         .form-div {
             width: 60%;
             height: 90vh;
-            background-color: #b3bfbc;
+            background-color: #f5f5f5;
             display: flex;
             justify-content: center;
             align-items: center;
             border-radius: 2vw;
+
         }
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        /*body {*/
+        /*    display: flex;*/
+        /*    align-items: center;*/
+        /*    justify-content: center;*/
+        /*}*/
         form {
             width: 80%;
             height: 80%;
@@ -33,13 +39,61 @@
         .mb-3, .col-sm-3 {
             padding: 10px;
         }
+        nav {
+            background-color: #007bff;
+            padding: 10px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        nav span {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        li {
+            margin-right: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #b8a7a7; /* Lighter shade for hover effect */
+        }
     </style>
 
 </head>
 <body>
+<nav>
+    <!--    vendor name dynamically loaded as logo-->
+    <span th:text="${vendor.name}"></span>
+    <ul>
+        <li><a th:href="@{${'/foodieez/'+idVendor+'/products'}}">My products</a></li>
+        <li><a th:href="@{${'/foodieez/'+idVendor+'/create-product'}}">Add product</a></li>
+        <li><a th:href="@{${'/foodieez/'+idVendor+'/categories'}}">Categories</a></li>
+    </ul>
+</nav>
+<div class="main">
+
 <div class="form-div" th:object="${productToBeUpdated}" >
     <div>
-       <img src="" th:src="@{${'/productImages/' + imagepath}}" alt="Cannot display image" width="250px" height="400px"/>
+       <img src="" th:src="@{${'/productImages/' + imagepath}}" alt="Cannot display image" width="250px" height="280px"/>
     </div>
     <form th:action="@{'/foodieez/'+${idVendor}+'/'+${productToBeUpdated.category.id}+'/'+${productToBeUpdated.id}+'/update'}"  method="post" enctype="multipart/form-data">
         <input type="hidden" name="_method" value="put">
@@ -47,9 +101,6 @@
         <input type="hidden" id="oldName" name="oldName" th:value="${imagepath}">
         <div>
             <h2>Update Product</h2>
-        </div>
-        <div>
-            <img src="">
         </div>
         <div class="mb-3">
             <input class="form-control" type="text" placeholder="Name of Product" aria-label="default input example" id="name" name="name" th:value="*{name}"  required>
@@ -74,13 +125,14 @@
         </div>
         <div class="mb-3">
             <label for="pathImage" class="form-label">Image</label>
-            <input class="form-control" type="file" id="pathImage" name="pathImage" >
+            <input class="form-control" type="file" id="pathImage" name="pathImage" required >
         </div>
 
         <div class="mb-3">
             <button type="submit" class="btn btn-danger">Update</button>
         </div>
     </form>
+</div>
 </div>
 </body>
 </html>

@@ -2,77 +2,154 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html,body{
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+    <title>Sign Up Form</title>
+    <!-- Add your CSS link here -->
 </head>
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #e9ecef;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 2rem;
+        background-color: #fff;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #495057;
+    }
+
+    input[type="email"],
+    input[type="text"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="password"] {
+        display: block;
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    input[type="email"]:focus,
+    input[type="text"]:focus,
+    input[type="tel"]:focus,
+    input[type="number"]:focus,
+    input[type="password"]:focus {
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .submit-btn {
+        display: block;
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        transition: background-color 0.15s ease-in-out;
+    }
+
+    .submit-btn:hover {
+        background-color: #0056b3;
+    }
+
+    span {
+        display: block;
+        margin-top: 0.5rem;
+        color: #dc3545;
+        font-size: 0.875rem;
+    }
+    #fg-3{
+        display: flex;
+        flex-direction: row;
+        justify-content:space-between;
+        flex-wrap: wrap;
+    }
+    #city,#pinCode{
+        width: 30%;
+    }
+
+</style>
 <body>
 
-<div class="main-div">
+<div class="container">
+    <h2>Sign Up</h2>
     <form th:action="@{/signup}" method="post" th:object="${userSignUpDto}">
-        <div class="input-div">
-            <label for="email">Email</label>
-            <input id="email" type="email" name="email" th:field="*{email}">
-            <p th:each="error:${#fields.errors('email')}" th:text="${error}" style="font-size: smaller;color: red"/>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" type="email" name="email" th:field="*{email}" required>
+            <span th:each="error:${#fields.errors('email')}" th:text="${error}"></span>
         </div>
 
-        <div class="input-div">
-            <label for="name">Name</label>
-            <input id="name" type="text" name="name" th:field="*{name}">
-            <p th:each="error:${#fields.errors('name')}" th:text="${error}" style="font-size: smaller;color: red"/>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input id="name" type="text" name="name" th:field="*{name}" required>
+            <span th:each="error:${#fields.errors('name')}" th:text="${error}"></span>
         </div>
 
-        <div class="input-div">
-            <label for="phoneNumber">Phone Number</label>
-            <input id="phoneNumber" type="number" name="phoneNumber" th:field="*{phoneNumber}" >
-            <p th:each="error:${#fields.errors('phoneNumber')}" th:text="${error}" style="font-size: smaller;color: red"/>
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number:</label>
+            <input id="phoneNumber" type="tel" name="phoneNumber" th:field="*{phoneNumber}" required>
+            <span th:each="error:${#fields.errors('phoneNumber')}" th:text="${error}"></span>
         </div>
 
-        <div class="input-div">
-            <label for="age">Age</label>
-            <input type="number" id="age" name="age" th:field="*{age}">
-            <p th:each="error:${#fields.errors('age')}" th:text="${error}" style="font-size: smaller;color: red"/>
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input id="age" type="number" name="age" th:field="*{age}" min="0" required>
+            <span th:each="error:${#fields.errors('age')}" th:text="${error}"></span>
         </div>
 
-        <div class="input-div">
-            <div>
-                <label for="city">City</label>
-                <input id="city" name="address.city" type="text" th:field="*{address.city}">
-                <label for="pinCode">PinCode</label>
-                <input id="pinCode" type="number" name="address.pinCode" th:field="*{address.pinCode}">
-            </div>
-            <div>
-                <label for="street">Street</label>
-                <input id="street" name="address.street" type="text" th:field="*{address.street}">
-            </div>
+        <div class="form-group" id="fg-3">
+            <input id="city" type="text" name="address.city" th:field="*{address.city}" placeholder="City" required>
+            <input id="pinCode" type="text" name="address.pinCode" th:field="*{address.pinCode}" placeholder="PinCode" required>
+            <input id="street" type="text" name="address.street" th:field="*{address.street}" placeholder="Street" required>
         </div>
 
-        <div class="input-div">
-            <div>
-                <label for="password">Password</label>
-                <input id="password" name="password" type="password" th:field="*{password}">
-                <p th:each="error:${#fields.errors('password')}" th:text="${error}" style="font-size: smaller;color: red"/>
-            </div>
-            <div>
-                <label for="rePass">Re-enter Password</label>
-                <input id="rePass" type="password" name="rePass">
-                <!-- Add this code where you want to display the error for PasswordMatchers -->
-                <p th:each="error:${#fields.errors('rePass')}" th:text="${error}" style="font-size: smaller;color: red"/>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input id="password" type="password" name="password" th:field="*{password}" required>
+            <span th:each="error:${#fields.errors('password')}" th:text="${error}"></span>
+        </div>
 
-            </div>
+        <div class="form-group">
+            <label for="rePass">Re-enter Password:</label>
+            <input id="rePass" type="password" name="rePass" required>
+            <span th:each="error:${#fields.errors('rePass')}" th:text="${error}"></span>
         </div>
-        <div class="submit-btn">
-            <button type="submit">Submit</button>
-        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
     </form>
 </div>
 
